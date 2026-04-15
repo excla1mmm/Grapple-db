@@ -7,7 +7,7 @@ contribute here — just add a YAML entry and open a PR.
 ## Adding an incident
 
 1. Fork this repository
-2. Edit `incidents/database.yml`
+2. Edit `database.yml`
 3. Add your entry following the format below
 4. Run `python validate.py` to check your entry is valid
 5. Open a pull request

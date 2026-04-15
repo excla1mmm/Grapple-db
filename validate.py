@@ -25,7 +25,7 @@ except ImportError:
 
 
 ROOT_DIR = Path(__file__).resolve().parent
-DATABASE_FILE = ROOT_DIR / "incidents" / "database.yml"
+DATABASE_FILE = ROOT_DIR / "database.yml"
 SCHEMA_FILE = ROOT_DIR / "schema.json"
 
 
