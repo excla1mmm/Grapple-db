@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Grapple Incidents Database",
+  "description": "Schema for entries in incidents/database.yml",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": ["action", "date", "severity", "title", "description", "affected_refs", "references"],
+    "additionalProperties": false,
+    "properties": {
+      "action": {
+        "type": "string",
+        "description": "GitHub Actions identifier in owner/repo format",
+        "pattern": "^[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$",
+        "examples": ["tj-actions/changed-files", "aquasecurity/trivy-action"]
+      },
+      "date": {
+        "type": "string",
+        "description": "Date the incident was publicly disclosed (YYYY-MM-DD)",
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+      },
+      "severity": {
+        "type": "string",
+        "description": "Incident severity level",
+        "enum": ["critical", "high", "medium", "low"]
+      },
+      "cve": {
+        "type": "string",
+        "description": "CVE identifier if assigned (optional)",
+        "pattern": "^CVE-[0-9]{4}-[0-9]+$"
+      },
+      "title": {
+        "type": "string",
+        "description": "Short one-line description of the incident",
+        "minLength": 10,
+        "maxLength": 120
+      },
+      "affected_repos_estimate": {
+        "type": "integer",
+        "description": "Estimated number of affected repositories (optional)",
+        "minimum": 0
+      },
+      "description": {
+        "type": "string",
+        "description": "Full description: what happened, how, impact",
+        "minLength": 50
+      },
+      "affected_refs": {
+        "type": "array",
+        "description": "Which refs (tags, branches, SHAs) were affected",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "required": ["type"],
+          "oneOf": [
+            {
+              "properties": {
+                "type": {"const": "all_tags_before"},
+                "date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"}
+              },
+              "required": ["type", "date"],
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "type": {"const": "tag"},
+                "value": {"type": "string"}
+              },
+              "required": ["type", "value"],
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "type": {"const": "branch"},
+                "value": {"type": "string"}
+              },
+              "required": ["type", "value"],
+              "additionalProperties": false
+            },
+            {
+              "properties": {
+                "type": {"const": "sha_range"},
+                "from": {"type": "string"},
+                "to": {"type": "string"}
+              },
+              "required": ["type", "from", "to"],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "references": {
+        "type": "array",
+        "description": "Links to advisories, blog posts, CVE entries",
+        "minItems": 1,
+        "items": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
+    }
+  }
+}

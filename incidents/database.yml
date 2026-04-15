@@ -1,0 +1,72 @@
+# Grapple Incidents Database
+# Format documented in schema.json
+# To add an incident, see CONTRIBUTING.md
+
+- action: tj-actions/changed-files
+  date: "2025-03-14"
+  severity: critical
+  cve: CVE-2025-30066
+  title: "Malicious code injection via compromised Personal Access Token"
+  affected_repos_estimate: 23000
+  description: |
+    An attacker obtained a Personal Access Token belonging to a tj-actions
+    maintainer and used it to push malicious commits across multiple tags.
+    The injected code caused the action to print CI secrets (tokens, API keys)
+    to the workflow log in plain text, where they could be harvested by the
+    attacker. Any repository using a non-SHA-pinned reference to this action
+    during the window was affected.
+  affected_refs:
+    - type: all_tags_before
+      date: "2025-03-14"
+  references:
+    - https://github.com/advisories/GHSA-mrrh-fwg4-5jwj
+    - https://www.cve.org/CVERecord?id=CVE-2025-30066
+
+- action: reviewdog/action-misspell
+  date: "2025-03-14"
+  severity: critical
+  title: "Supply chain compromise via same attack chain as tj-actions"
+  affected_repos_estimate: 1500
+  description: |
+    Compromised as part of the same March 2025 attack campaign that targeted
+    tj-actions/changed-files. The attacker used a stolen Personal Access Token
+    to inject malicious code that exfiltrated CI secrets to an external server.
+    Other reviewdog actions (action-actionlint, action-shellcheck, etc.) were
+    also affected in the same campaign.
+  affected_refs:
+    - type: all_tags_before
+      date: "2025-03-14"
+  references:
+    - https://github.com/reviewdog/action-misspell/security/advisories/GHSA-xq2p-4wqx-5rvj
+
+- action: reviewdog/action-actionlint
+  date: "2025-03-14"
+  severity: critical
+  title: "Supply chain compromise via same attack chain as tj-actions"
+  affected_repos_estimate: 800
+  description: |
+    Compromised as part of the same March 2025 attack campaign that targeted
+    tj-actions/changed-files. Malicious code injected via stolen PAT caused
+    CI secrets to be exfiltrated from affected workflows.
+  affected_refs:
+    - type: all_tags_before
+      date: "2025-03-14"
+  references:
+    - https://github.com/reviewdog/action-actionlint/security/advisories/GHSA-h625-g92x-59wc
+
+- action: aquasecurity/trivy-action
+  date: "2026-03-15"
+  severity: critical
+  title: "Supply chain attack: 75 tags overwritten with malicious code"
+  affected_repos_estimate: 2300
+  description: |
+    Attackers gained write access to the aquasecurity/trivy-action repository
+    and overwrote 75 tags, replacing them with commits containing code that
+    exfiltrated CI secrets (tokens, environment variables) to an external
+    server. Any workflow referencing this action by tag (e.g. @v0.20.0) instead
+    of a full commit SHA executed the malicious code.
+  affected_refs:
+    - type: all_tags_before
+      date: "2026-03-15"
+  references:
+    - https://github.com/aquasecurity/trivy-action/security/advisories/GHSA-hgjh-9rj2-g67j

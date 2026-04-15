@@ -1,0 +1,27 @@
+name: Validate incidents database
+
+on:
+  pull_request:
+    paths:
+      - "incidents/database.yml"
+      - "schema.json"
+      - "validate.py"
+  push:
+    branches:
+      - main
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install PyYAML jsonschema
+
+      - name: Validate database
+        run: python validate.py
