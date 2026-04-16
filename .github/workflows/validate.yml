@@ -3,7 +3,7 @@ name: Validate incidents database
 on:
   pull_request:
     paths:
-      - "incidents/database.yml"
+      - "database.yml"
       - "schema.json"
       - "validate.py"
   push:

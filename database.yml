@@ -70,3 +70,105 @@
       date: "2026-03-15"
   references:
     - https://github.com/aquasecurity/trivy-action/security/advisories/GHSA-hgjh-9rj2-g67j
+
+- action: reviewdog/action-setup
+  date: "2025-03-19"
+  severity: high
+  cve: CVE-2025-30154
+  title: "Malicious code added to reviewdog/action-setup@v1 during a supply chain attack"
+  description: |
+    GitHub's advisory states that reviewdog/action-setup@v1 was compromised
+    on March 11, 2025 between 18:42 and 20:31 UTC. Malicious code was added
+    that dumped exposed secrets to GitHub Actions workflow logs. This attack
+    also impacted other reviewdog actions that depended on action-setup@v1.
+  affected_refs:
+    - type: tag
+      value: v1
+  references:
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+    - https://github.com/reviewdog/reviewdog/issues/2079
+
+- action: reviewdog/action-shellcheck
+  date: "2025-03-18"
+  severity: critical
+  title: "Supply chain compromise via transitive dependency on reviewdog/action-setup"
+  description: |
+    The reviewdog maintainer disclosed that versions of reviewdog/action-shellcheck
+    below v1.29.2 were affected by the March 11, 2025 supply chain attack because
+    they depended on reviewdog/action-setup@v1 while that tag pointed to malicious
+    code. As a result, workflows using these versions could leak secrets through
+    GitHub Actions workflow logs during the compromise window.
+  affected_refs:
+    - type: tag
+      value: "<v1.29.2"
+  references:
+    - https://github.com/reviewdog/reviewdog/issues/2079
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+
+- action: reviewdog/action-composite-template
+  date: "2025-03-18"
+  severity: critical
+  title: "Supply chain compromise via transitive dependency on reviewdog/action-setup"
+  description: |
+    The reviewdog maintainer disclosed that versions of reviewdog/action-composite-template
+    below v0.20.2 were affected by the March 11, 2025 supply chain attack because
+    they depended on reviewdog/action-setup@v1 while that tag pointed to malicious
+    code. Any impacted workflow could execute the compromised dependency and expose
+    secrets in GitHub Actions workflow logs during the attack window.
+  affected_refs:
+    - type: tag
+      value: "<v0.20.2"
+  references:
+    - https://github.com/reviewdog/reviewdog/issues/2079
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+
+- action: reviewdog/action-staticcheck
+  date: "2025-03-18"
+  severity: critical
+  title: "Supply chain compromise via transitive dependency on reviewdog/action-setup"
+  description: |
+    The reviewdog maintainer disclosed that versions of reviewdog/action-staticcheck
+    below v1.26.2 were affected by the March 11, 2025 supply chain attack because
+    they depended on reviewdog/action-setup@v1 while that tag pointed to malicious
+    code. This meant affected workflows could run compromised code and leak exposed
+    secrets through GitHub Actions workflow logs.
+  affected_refs:
+    - type: tag
+      value: "<v1.26.2"
+  references:
+    - https://github.com/reviewdog/reviewdog/issues/2079
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+
+- action: reviewdog/action-ast-grep
+  date: "2025-03-18"
+  severity: critical
+  title: "Supply chain compromise via transitive dependency on reviewdog/action-setup"
+  description: |
+    The reviewdog maintainer disclosed that versions of reviewdog/action-ast-grep
+    below v1.26.2 were affected by the March 11, 2025 supply chain attack because
+    they depended on reviewdog/action-setup@v1 while that tag pointed to malicious
+    code. During the compromise window, workflows using these versions risked
+    exposing secrets through GitHub Actions workflow logs.
+  affected_refs:
+    - type: tag
+      value: "<v1.26.2"
+  references:
+    - https://github.com/reviewdog/reviewdog/issues/2079
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+
+- action: reviewdog/action-typos
+  date: "2025-03-18"
+  severity: critical
+  title: "Supply chain compromise via transitive dependency on reviewdog/action-setup"
+  description: |
+    The reviewdog maintainer disclosed that versions of reviewdog/action-typos
+    below v1.17.2 were affected by the March 11, 2025 supply chain attack because
+    they depended on reviewdog/action-setup@v1 while that tag pointed to malicious
+    code. Affected workflows could therefore execute compromised code and leak
+    exposed secrets to GitHub Actions workflow logs.
+  affected_refs:
+    - type: tag
+      value: "<v1.17.2"
+  references:
+    - https://github.com/reviewdog/reviewdog/issues/2079
+    - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc

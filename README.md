@@ -20,6 +20,12 @@ Used by [Grapple](https://github.com/excla1mmm/Grapple) to flag compromised acti
 | `tj-actions/changed-files` | 2025-03-14 | critical | CVE-2025-30066 |
 | `reviewdog/action-misspell` | 2025-03-14 | critical | — |
 | `reviewdog/action-actionlint` | 2025-03-14 | critical | — |
+| `reviewdog/action-shellcheck` | 2025-03-18 | critical | — |
+| `reviewdog/action-composite-template` | 2025-03-18 | critical | — |
+| `reviewdog/action-staticcheck` | 2025-03-18 | critical | — |
+| `reviewdog/action-ast-grep` | 2025-03-18 | critical | — |
+| `reviewdog/action-typos` | 2025-03-18 | critical | — |
+| `reviewdog/action-setup` | 2025-03-19 | high | CVE-2025-30154 |
 | `aquasecurity/trivy-action` | 2026-03-15 | critical | — |
 
 ## Adding an incident
