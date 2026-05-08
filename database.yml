@@ -172,3 +172,75 @@
   references:
     - https://github.com/reviewdog/reviewdog/issues/2079
     - https://github.com/advisories/GHSA-qmg3-hpqr-gqvc
+
+- action: codecov/codecov-action
+  date: "2021-04-15"
+  severity: critical
+  title: "Codecov Bash Uploader compromise exposed CI environment secrets"
+  description: |
+    Codecov disclosed that an attacker gained unauthorized access to the Bash
+    Uploader and periodically modified it between January 31 and April 1, 2021.
+    The Codecov GitHub Action used this uploader, so affected workflows could
+    execute the altered script and export CI environment variables, tokens, keys,
+    and git remote information to attacker-controlled infrastructure.
+  affected_refs:
+    - type: tag
+      value: v1
+  references:
+    - https://about.codecov.io/security-update/
+    - https://www.cisa.gov/news-events/alerts/2021/04/22/codecov-releases-security-update
+
+- action: aquasecurity/setup-trivy
+  date: "2026-03-21"
+  severity: critical
+  cve: CVE-2026-33634
+  title: "Trivy setup action tags replaced with credential-stealing malware"
+  description: |
+    Aqua Security disclosed that compromised credentials were used to replace all
+    seven existing aquasecurity/setup-trivy tags with malicious commits. The
+    injected action step ran before the legitimate setup logic and deployed the
+    same infostealer used in the trivy-action tag hijacking incident, exposing
+    CI/CD secrets, cloud credentials, SSH keys, and other runner data.
+  affected_refs:
+    - type: all_tags_before
+      date: "2026-03-21"
+  references:
+    - https://github.com/advisories/GHSA-69fq-xp46-6x23
+    - https://github.com/aquasecurity/trivy/security/advisories/GHSA-69fq-xp46-6x23
+
+- action: checkmarx/kics-github-action
+  date: "2026-03-23"
+  severity: critical
+  title: "KICS GitHub Action tags hijacked with an infostealer payload"
+  description: |
+    Checkmarx disclosed a supply chain incident affecting the KICS GitHub Action
+    on March 23, 2026. Malicious payloads were injected into action artifacts
+    available during the exposure window, and external incident analysis reported
+    that KICS action tags served credential-stealing malware to workflows that
+    referenced the action by tag instead of a full commit SHA.
+  affected_refs:
+    - type: all_tags_before
+      date: "2026-03-23"
+  references:
+    - https://checkmarx.com/blog/checkmarx-security-update/
+    - https://www.wiz.io/blog/teampcp-attack-kics-github-action
+    - https://www.stepsecurity.io/blog/checkmarx-kics-github-action-compromised-malware-injected-in-all-git-tags
+
+- action: checkmarx/ast-github-action
+  date: "2026-03-23"
+  severity: critical
+  title: "AST GitHub Action compromised during Checkmarx supply chain incident"
+  description: |
+    Checkmarx disclosed that the AST GitHub Action was affected by the March 23,
+    2026 supply chain incident. The attacker injected malicious payloads into
+    action workflows available during the exposure window, including the
+    compromised 3.32 version and references resolving to main at the time.
+    Organizations running impacted workflows were instructed to rotate credentials
+    and move to the verified post-remediation releases.
+  affected_refs:
+    - type: tag
+      value: "3.32"
+    - type: branch
+      value: main
+  references:
+    - https://checkmarx.com/blog/checkmarx-security-update/
